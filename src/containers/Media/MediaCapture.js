@@ -65,16 +65,11 @@ class MediaCapture extends Component {
   }
 
   saveMedia(mediaUri) {
-    console.log('saving media',mediaUri);
-     this.props.dispatch(saveMedia(mediaUri)).then((res)=> {
-       //if(res) {
-       Actions.tabBar();
-       Actions.mediaTab();
-       Actions.mediaScene();
-       //} else {
-       //  console.log('errrror');
-       //}
-     });
+    this.props.dispatch(saveMedia(mediaUri)).then(()=> {
+      Actions.tabBar();
+      Actions.mediaTab();
+      Actions.mediaScene();
+    }).catch((err)=>console.log('error',err));
   }
 
   retake() {

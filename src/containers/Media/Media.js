@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   const { entities,mediaReducer,userReducer } = state;
   const media = entities.medias[mediaReducer.current];
-  console.log(media);
   const comments = media && media.comments ? media.comments.map((commentID) => Object.assign({},entities.comments[commentID],{user:entities.users[entities.comments[commentID].user]})) : [];
 
   return {
