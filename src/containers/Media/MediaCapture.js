@@ -68,7 +68,7 @@ class MediaCapture extends Component {
     this.props.dispatch(saveMedia(mediaUri)).then(()=> {
       Actions.tabBar();
       Actions.mediaTab();
-      Actions.mediaScene();
+      //Actions.mediaScene();
     }).catch((err)=>console.log('error',err));
   }
 

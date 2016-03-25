@@ -76,8 +76,11 @@ export function saveMedia(uri) {
         .then(response => response.json())
         .then(json => {
           if(!json.success) {
-            Promise.reject(new Error(json.message));
+            return Promise.reject(new Error(json.message));
           }
+
+          json.user = state().entities.users[state().userReducer.current];
+
           dispatch(mediaSaveSuccess())
             .then(()=>dispatch(mediaSuccess(json)))
             .then(()=>dispatch(setCurrentMedia(json.data.id)));
