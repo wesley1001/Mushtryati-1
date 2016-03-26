@@ -1,20 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
-import t from 'tcomb-form-native';
+'use strict'
+import React from 'react';
+import { Component, StyleSheet, Text, View, Image, TouchableHighlight, TextInput } from 'react-native';
+import { assets } from './../../utils/assets';
 import FormButton from './../FormButton';
-import stylesheet from '../../assets/style/form';
+import stylesheet from './../../assets/style/form';
+import LoadingIndicator from './../../components/LoadingIndicator';
+import t from 'tcomb-form-native/lib';
 const Form = t.form.Form;
 
 export default class LoginScene extends Component {
-
-  static propTypes= {
-    login:PropTypes.object.isRequired,
-    credentials:PropTypes.object.isRequired,
-    onChange:PropTypes.func.isRequired,
-    onLoginPress:PropTypes.func.isRequired,
-    onForgotPasswordRoutePress:PropTypes.func.isRequired,
-    onRegisterRoutePress:PropTypes.func.isRequired,
-  };
 
   handleLogin() {
     this.props.onLoginPress();
@@ -35,22 +29,24 @@ export default class LoginScene extends Component {
     const {login} = this.props;
 
     let email = {
-      label: 'الايميل',
-      placeholder: 'الايميل',
+      label: 'Email',
+      placeholder: 'Email',
       keyboardType: 'email-address',
       editable: !login.isFetching,
       hasError: login.form.fields.emailHasError,
       error: 'Please enter valid email',
+      autoCapitalize:'none',
+      autoCorrect:false
     };
 
     let password = {
-      label: 'كلمة السر',
-      placeholder: 'كلمة السر',
+      label: 'Password',
+      placeholder: 'Password',
       maxLength: 12,
       secureTextEntry: true,
       editable: !login.isFetching,
       hasError: login.form.fields.passwordHasError,
-      error: 'Must have 6-12 numbers, letters or special characters',
+      error: 'Must have 6-12 numbers, letters or special characters'
     };
 
     const loginForm = t.struct({
@@ -66,30 +62,37 @@ export default class LoginScene extends Component {
     };
 
     return (
+      <View style={styles.container}>
 
-      <View>
+
+        {login.isFetching ? <LoadingIndicator /> : <View />}
 
         <Form ref="form"
               type={loginForm}
               options={options}
               value={this.props.credentials}
               onChange={this.props.onChange}
-          />
+        />
 
         <FormButton
+          //isDisabled={!login.form.isValid || login.isFetching}
           onPress={this.handleLogin.bind(this)}
-          buttonText='الدخول'/>
+          buttonText='Login'
+        />
 
-        <TouchableHighlight onPress={this.handleRegisterRoutePress.bind(this)} underlayColor='transparent'>
-          <Text style={[styles.label,styles.center,styles.textUnderline]}>لا يوجد الحساب ؟ سحل الان </Text>
+        <TouchableHighlight onPress={this.handleRegisterRoutePress.bind(this)} underlayColor='transparent'
+                            style={[styles.center,styles.mTop20]}
+        >
+          <Text style={[styles.label,styles.textUnderline]}>Dont have an account? Register</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={this.handleForgotPasswordRoutePress.bind(this)} style={styles.center}
-                            underlayColor='transparent'>
-          <Text style={[styles.label,styles.textUnderline, styles.mTop20]}>نسيت كلمة السر</Text>
+        <TouchableHighlight onPress={this.handleForgotPasswordRoutePress.bind(this)} style={[styles.center,styles.mTop20]}
+                            underlayColor='transparent' >
+          <Text style={[styles.label,styles.textUnderline]}>Forgot your password ?</Text>
         </TouchableHighlight>
 
       </View>
+
     )
   }
 
@@ -97,6 +100,9 @@ export default class LoginScene extends Component {
 
 var styles = StyleSheet.create({
 
+  container:{
+    padding:10
+  },
   label: {
     fontSize: 14,
     color: '#888888',

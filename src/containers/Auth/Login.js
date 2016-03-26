@@ -28,7 +28,8 @@ export default class Login extends Component {
     dispatch(login(credentials))
       .then((success)=> {
         if(success) {
-          return Actions.home();
+          Actions.tabBar();
+          Actions.home();
         } else {
           alert('Wrong Credentials, Try again');
         }
@@ -42,6 +43,7 @@ export default class Login extends Component {
 
   handleForgotPasswordRoute() {
     // @todo: implement route
+    Actions.tabBar();
     Actions.home();
   }
 

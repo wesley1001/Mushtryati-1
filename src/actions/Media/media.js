@@ -24,7 +24,7 @@ function mediasSuccess(payload) {
 function mediaSaveSuccess(payload) {
   const normalized = normalize(payload.data, Schemas.MEDIA);
   return {
-    type: MEDIA_SUCCESS,
+    type: MEDIA_SAVE_SUCCESS,
     entities: normalized.entities
   }
 }
@@ -61,22 +61,23 @@ export function setCurrentMedia(mediaID) {
 }
 
 export function saveMedia(uri) {
-  return (dispatch,state) => {
+  return (dispatch) => {
 
     dispatch({type:MEDIA_SAVE_REQUEST});
 
     var xhr = new XMLHttpRequest;
 
     xhr.onreadystatechange = (e) => {
+
       if (xhr.readyState !== 4) {
         return;
       }
+
+      var json = JSON.parse(xhr.responseText);
+
       if (xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
         dispatch(mediaSaveSuccess(json));
-        dispatch(setCurrentMedia(json.data.id));
       } else {
-        var json = JSON.parse(xhr.responseText);
         dispatch({type: MEDIA_SAVE_FAILURE, error: json.message});
       }
     };

@@ -29,6 +29,7 @@ class App extends Component {
     const {dispatch} = this.props;
     dispatch(loginUserByToken()).then((success)=>{
       if(success) {
+        //Actions.tabBar();
         //dispatch(fetchFavorites());
       }
     });
@@ -45,7 +46,12 @@ class App extends Component {
         />
         <Schema name="withoutAnimation"/>
         <Schema name="tab" type="switch" icon={TabIcon} />
-        <Route initial={true}  name="tabBar">
+
+        <Route initial={true} name="login" component={Login}  />
+        <Route name="register" component={Register} title="تسجيل الدخول"   />
+        <Route name="loginDialog" schema="modal" hideNavBar={true}  component={LoginDialog} />
+
+        <Route name="tabBar">
           <Router footer={TabBar} hideNavBar={true} tabBarStyle={{backgroundColor:'#343459', justifyContent:'center', alignItems:'center', alignSelf:'center', height:40, paddingTop:10}}>
             <Route name="settingsScene" schema="tab" component={Medias} selectedTabIcon="ion|ios-gear" tabIcon="ion|ios-gear-outline"  />
             <Route name="userDownloadsScene" schema="tab" component={UserDownloads}  selectedTabIcon="ion|android-star" tabIcon="ion|android-star-outline"   />
@@ -71,9 +77,7 @@ class App extends Component {
           </Router>
         </Route>
         <Route name="mediaCapture" hideTabBar={true} hideNavBar={true} component={MediaCapture}  />
-        <Route name="login" component={Login}  />
-        <Route name="register" component={Register} title="تسجيل الدخول"   />
-        <Route name="loginDialog" schema="modal" hideNavBar={true}  component={LoginDialog} />
+
       </Router>
     );
 

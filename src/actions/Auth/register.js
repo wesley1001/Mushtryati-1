@@ -3,7 +3,8 @@ import {API_ROOT} from './../../constants/config'
 import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  ON_REGISTER_FORM_FIELD_CHANGE
 } from '../../constants/actiontypes';
 
 function registerRequest() {
@@ -46,5 +47,12 @@ export function register(inputs, cb = ()=> {
       .catch((err)=> {
         dispatch(registerFailure(err))
       });
+  };
+}
+
+export function onRegisterFormFieldChange(field, value) {
+  return {
+    type: ON_REGISTER_FORM_FIELD_CHANGE,
+    payload: {field: field, value: value}
   };
 }

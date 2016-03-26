@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, ScrollView } from 'react-native';
 import { connect } from '../../../node_modules/react-redux';
-import { signup, onRegisterFormFieldChange } from '../../actions/Auth/register';
+import { register, onRegisterFormFieldChange } from '../../actions/Auth/register';
 import { Actions } from 'react-native-router-flux';
 import RegisterScene from './../../components/Auth/RegisterScene';
 import LoadingIndicator from './../../components/LoadingIndicator';
@@ -34,10 +34,10 @@ class Register extends Component {
   }
 
   handleRegister() {
-    const {dispatch,register} = this.props;
+    const {dispatch} = this.props;
     const fields = this.state.fields;
     console.log('fields', JSON.stringify(fields));
-    dispatch(signup(fields, (cb)=> {
+    dispatch(register(fields, (cb)=> {
       Actions.login();
     }));
   }
