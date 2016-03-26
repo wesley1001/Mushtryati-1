@@ -14,8 +14,14 @@ class UserDownloads extends Component {
   }
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(fetchUserDownloads());
+
+    if(!this.props.userReducer.isAuthenticated) {
+      return Actions.loginDialog({dialogText:'Please Login to view and manage your Favorites'});
+    } else {
+      const {dispatch} = this.props;
+      dispatch(fetchUserDownloads());
+    }
+
   }
 
   loadMedia(media) {

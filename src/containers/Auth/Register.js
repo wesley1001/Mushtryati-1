@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { View, ScrollView } from 'react-native';
 import { connect } from '../../../node_modules/react-redux';
-import { register, onRegisterFormFieldChange } from '../../actions/Auth/register';
 import { Actions } from 'react-native-router-flux';
+import { register, onRegisterFormFieldChange } from '../../actions/Auth/register';
 import RegisterScene from './../../components/Auth/RegisterScene';
 import LoadingIndicator from './../../components/LoadingIndicator';
 
@@ -81,4 +81,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Register)
+export default connect(mapStateToProps)(Register);

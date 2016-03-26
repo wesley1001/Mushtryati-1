@@ -9,7 +9,6 @@ import { Actions } from 'react-native-router-flux';
 import MediaList from './../../components/Media/MediaList';
 import UserList from './../../components/User/UserList';
 import LoadingIndicator from './../../components/LoadingIndicator';
-import merge from 'lodash/merge';
 
 class Followers extends Component {
 

@@ -15,11 +15,13 @@ class MediaComments extends Component {
       visibleHeight: Dimensions.get('window').height,
     }
     this.commentMedia = this.commentMedia.bind(this);
+    this.keyboardWillShow = this.keyboardWillShow.bind(this);
+    this.keyboardWillHide = this.keyboardWillHide.bind(this);
   }
 
   componentWillMount() {
-    //DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
-    //DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
+    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
     this.props.dispatch(fetchComments());
   }
 
@@ -33,9 +35,13 @@ class MediaComments extends Component {
   }
 
   commentMedia(comment) {
+    // to manually check if the user is logged in.
+    // this check is not necessary if the app by default restricts to authenticated user's only
+
     if(!this.props.userReducer.isAuthenticated) {
       return Actions.loginDialog({dialogText:'Please Login to view and manage your Favorites'});
     }
+
     const {dispatch} = this.props;
     dispatch(commentMedia((comment))).then(()=>{
       this.refs.scrollView.scrollTo({x: 0})
@@ -45,7 +51,7 @@ class MediaComments extends Component {
   render() {
     const {comments} = this.props;
     return (
-      <ScrollView contentContainerStyle={[{paddingBottom: 49,paddingTop: 64, margin:5, height: this.state.visibleHeight}]} ref="scrollView">
+      <ScrollView contentContainerStyle={{paddingBottom: 49,paddingTop: 64, margin:5, height: this.state.visibleHeight}} ref="scrollView">
         <MediaCommentList
           comments={comments}
         />

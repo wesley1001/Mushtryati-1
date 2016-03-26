@@ -31,6 +31,7 @@ class Medias extends Component {
     if (mediasReducer.isFetching) {
       return <LoadingIndicator />;
     }
+
     return (
       <ScrollView
         contentInset={{bottom:49}}
@@ -45,7 +46,7 @@ class Medias extends Component {
 }
 
 function mapStateToProps(state) {
-  const {entities,mediasReducer } = state
+  const { entities,mediasReducer } = state;
   return {
     ...state,
     mediasReducer,

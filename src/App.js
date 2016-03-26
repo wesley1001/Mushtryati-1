@@ -19,6 +19,7 @@ import MediaCapture from './containers/Media/MediaCapture';
 import UserMedias from './containers/User/UserMedias';
 import Followers from './containers/User/Followers';
 import Followings from './containers/User/Followings';
+import Settings from './containers/Settings';
 import TabIcon from './components/TabIcon';
 import LoginDialog from './components/LoginDialog';
 
@@ -29,7 +30,7 @@ class App extends Component {
     const {dispatch} = this.props;
     dispatch(loginUserByToken()).then((success)=>{
       if(success) {
-        //Actions.tabBar();
+        //Actions.tabBar();tabBar
         //dispatch(fetchFavorites());
       }
     });
@@ -53,7 +54,7 @@ class App extends Component {
 
         <Route name="tabBar">
           <Router footer={TabBar} hideNavBar={true} tabBarStyle={{backgroundColor:'#343459', justifyContent:'center', alignItems:'center', alignSelf:'center', height:40, paddingTop:10}}>
-            <Route name="settingsScene" schema="tab" component={Medias} selectedTabIcon="ion|ios-gear" tabIcon="ion|ios-gear-outline"  />
+            <Route name="settingsScene" schema="tab" component={Settings} selectedTabIcon="ion|ios-gear" tabIcon="ion|ios-gear-outline"  />
             <Route name="userDownloadsScene" schema="tab" component={UserDownloads}  selectedTabIcon="ion|android-star" tabIcon="ion|android-star-outline"   />
             <Route name="userFavoritesScene" schema="tab" component={UserFavorites}  selectedTabIcon="ion|android-favorite" tabIcon="ion|android-favorite-outline"   />
             <Route name="mediaTab" initial={true}  schema="tab" selectedTabIcon="ion|briefcase" tabIcon="ion|briefcase" >

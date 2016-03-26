@@ -59,7 +59,7 @@ class Media extends Component {
 
   render() {
 
-    const {mediaReducer,media,user,comments} = this.props;
+    const {mediaReducer,media,user} = this.props;
 
     if (mediaReducer.isFetching) {
       return <LoadingIndicator />;
@@ -108,13 +108,13 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   const { entities,mediaReducer,userReducer } = state;
   const media = entities.medias[mediaReducer.current];
-  const comments = media && media.comments ? media.comments.map((commentID) => Object.assign({},entities.comments[commentID],{user:entities.users[entities.comments[commentID].user]})) : [];
+  //const comments = media && media.comments ? media.comments.map((commentID) => Object.assign({},entities.comments[commentID],{user:entities.users[entities.comments[commentID].user]})) : [];
 
   return {
     mediaReducer,
     media,
     user: entities.users[media.user],
-    comments: comments,
+    //comments: comments,
     userReducer
   }
 }

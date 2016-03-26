@@ -73,12 +73,14 @@ export function saveMedia(uri) {
         return;
       }
 
-      var json = JSON.parse(xhr.responseText);
-
       if (xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+
         dispatch(mediaSaveSuccess(json));
       } else {
-        dispatch({type: MEDIA_SAVE_FAILURE, error: json.message});
+        //var json = JSON.parse(xhr.response);
+
+        dispatch({type: MEDIA_SAVE_FAILURE, error: xhr.response});
       }
     };
 
