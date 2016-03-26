@@ -13,8 +13,16 @@ import {
   SET_CURRENT_MEDIA
 } from '../../constants/actiontypes';
 
-function mediaSuccess(payload) {
+function mediasSuccess(payload) {
   const normalized = normalize(payload.data, Schemas.MEDIA_ARRAY);
+  return {
+    type: MEDIA_SAVE_SUCCESS,
+    entities: normalized.entities
+  }
+}
+
+function mediaSaveSuccess(payload) {
+  const normalized = normalize(payload.data, Schemas.MEDIA);
   return {
     type: MEDIA_SUCCESS,
     entities: normalized.entities
@@ -37,7 +45,7 @@ export function fetchMedia() {
       return fetch(url)
         .then(response => response.json())
         .then(json => {
-          dispatch(mediaSuccess(json));
+          dispatch(mediasSuccess(json));
         })
         .catch((err)=> {
           dispatch({type: MEDIA_FAILURE, error: err});
@@ -52,42 +60,60 @@ export function setCurrentMedia(mediaID) {
   }
 }
 
-function mediaSaveSuccess() {
-  return {
-    type: MEDIA_SAVE_SUCCESS
-  }
-}
-
 export function saveMedia(uri) {
   return (dispatch,state) => {
 
     dispatch({type:MEDIA_SAVE_REQUEST});
 
-    const params = {
-      uri : uri
+    var xhr = new XMLHttpRequest;
+
+    xhr.onreadystatechange = (e) => {
+      if (xhr.readyState !== 4) {
+        return;
+      }
+      if (xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        dispatch(mediaSaveSuccess(json));
+        dispatch(setCurrentMedia(json.data.id));
+      } else {
+        var json = JSON.parse(xhr.responseText);
+        dispatch({type: MEDIA_SAVE_FAILURE, error: json.message});
+      }
+    };
+
+    var photo = {
+      uri: uri,
+      type: 'image/jpeg',
+      name: 'photo.jpg'
     };
 
     return getUserToken().then((token) => {
       const url = API_ROOT + `/medias?api_token=${token}`;
-      return fetch(url,{
-        method:'POST',
-        body: JSON.stringify(params)
-      })
-        .then(response => response.json())
-        .then(json => {
-          if(!json.success) {
-            return Promise.reject(new Error(json.message));
-          }
+      var body = new FormData();
+      body.append('api_token', token);
+      body.append('photo', photo);
+      xhr.open('POST', url);
+      xhr.send(body);
+      return true;
 
-          json.user = state().entities.users[state().userReducer.current];
-
-          dispatch(mediaSaveSuccess())
-            .then(()=>dispatch(mediaSuccess(json)))
-            .then(()=>dispatch(setCurrentMedia(json.data.id)));
-        })
-        .catch((err)=> {
-          dispatch({type: MEDIA_SAVE_FAILURE, error: err});
-        })
+      //return fetch(url,{
+      //  method:'POST',
+      //  body: data
+      //})
+      //  .then(response => response.json())
+      //  .then(json => {
+      //    console.log('json',json);
+      //    if(!json.success) {
+      //      return Promise.reject(new Error(json.message));
+      //    }
+      //    json.user = state().entities.users[state().userReducer.current];
+      //    dispatch(mediaSaveSuccess())
+      //      .then(()=>dispatch(mediaSuccess(json)))
+      //      .then(()=>dispatch(setCurrentMedia(json.data.id)));
+      //  })
+      //  .catch((err)=> {
+      //    dispatch({type: MEDIA_SAVE_FAILURE, error: err});
+      //  })
     })
   }
 }
