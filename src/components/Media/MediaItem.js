@@ -1,8 +1,8 @@
-'use strict';
-
-import React, { Component, Image, StyleSheet, Text, TouchableHighlight, View, ListView} from 'react-native';
-
+import React, { Component, PropTypes } from 'react';
+import { Image, StyleSheet, Text, TouchableHighlight, View, ListView} from 'react-native';
 import { Icon } from 'react-native-icons';
+import { getExtension } from './../../utils/functions';
+import Video from 'react-native-video';
 
 export default class MediaItem extends Component {
 
@@ -11,7 +11,12 @@ export default class MediaItem extends Component {
     return (
       <View style={styles.container}>
         <View>
-          {url ? <Image style={styles.img} source={{uri:url}}/> : <View/> }
+          {url ? getExtension(url) == 'jpg' ? <Image style={styles.img} source={{uri:url}}/> :
+            <Video source={{uri: url}}
+                   style={styles.fullScreen}
+                   repeat={false}
+            />
+            : <View/> }
         </View>
 
         <View>
@@ -42,5 +47,14 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 5,
     paddingTop: 10
+  },
+  fullScreen: {
+    flex:1,
+    position: 'absolute',
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    backgroundColor:'black'
   },
 });

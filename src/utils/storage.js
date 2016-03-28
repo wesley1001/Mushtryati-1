@@ -13,6 +13,7 @@ export const setUserToken = (token) => {
 };
 
 export const getUserToken = () => {
+  //AsyncStorage.setItem(API_TOKEN,'5SL4Gagx99IagAxLqsZpfSWOz2dDOoyVfDfWpeobHY1yhhLZSv3GGDVVl3bR');
   return AsyncStorage.getItem(API_TOKEN);
 };
 

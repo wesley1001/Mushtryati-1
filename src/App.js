@@ -30,7 +30,7 @@ class App extends Component {
     const {dispatch} = this.props;
     dispatch(loginUserByToken()).then((success)=>{
       if(success) {
-        //Actions.tabBar();tabBar
+        //Actions.tabBar();
         //dispatch(fetchFavorites());
       }
     });
@@ -74,7 +74,7 @@ class App extends Component {
           </Router>
         </Route>
 
-        <Route initial={true} name="login" component={Login}  />
+        <Route  name="login" component={Login}  />
         <Route name="register" component={Register} title="تسجيل الدخول"   />
         <Route name="mediaCapture" hideTabBar={true} hideNavBar={true} component={MediaCapture}  />
         <Route name="loginDialog" schema="modal" hideNavBar={true}  component={LoginDialog} />

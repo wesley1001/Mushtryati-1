@@ -2,6 +2,8 @@ import { API_ROOT } from './../../constants/config';
 import { normalize, Schema, arrayOf } from 'normalizr';
 import { Schemas } from './../../utils/schema';
 import { getUserToken } from './../../utils/storage';
+import { getExtension, getMediaName } from './../../utils/functions';
+
 import {
   MEDIA_SUCCESS,
   MEDIA_REQUEST,
@@ -72,11 +74,11 @@ export function saveMedia(uri) {
       if (xhr.readyState !== 4) {
         return;
       }
+      var json = JSON.parse(xhr.responseText);
 
       if (xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-
-        dispatch(mediaSaveSuccess(json));
+        console.log('j',json);
+        //dispatch(mediaSaveSuccess(json));
       } else {
         //var json = JSON.parse(xhr.response);
 
@@ -86,8 +88,8 @@ export function saveMedia(uri) {
 
     var photo = {
       uri: uri,
-      type: 'image/jpeg',
-      name: 'photo.jpg'
+      type: getExtension(uri),
+      name: getMediaName(uri)
     };
 
     return getUserToken().then((token) => {
