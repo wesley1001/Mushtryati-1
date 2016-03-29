@@ -7,7 +7,7 @@ const Lightbox = require('react-native-lightbox');
 export default class Master extends Component {
 
 
-  renderImage = (url) => {
+  renderImage(url) {
     console.log('url',url);
     return (
       <View style={{flex: 1}}>
@@ -24,7 +24,7 @@ export default class Master extends Component {
     return (
       <View style={styles.row}>
         {media.type == 'video' ?
-          <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=> this.renderVideoContent()}  >
+          <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=>this.renderVideoContent(media.video_url)}  >
             <Image
               style={styles.thumbnail}
               resizeMode="stretch"
@@ -32,7 +32,7 @@ export default class Master extends Component {
             />
           </Lightbox>
           :
-          <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=> this.renderImage(media.large_url)} >
+          <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=> this.renderImage(media.large_url)}  >
             <Image
               style={styles.thumbnail}
               resizeMode="stretch"

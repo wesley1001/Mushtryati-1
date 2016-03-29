@@ -113,7 +113,7 @@ export default class MediaCaptureScene extends Component {
             captureTarget={Camera.constants.CaptureTarget.disk}
             captureMode={cameraMode == 'video' ? Camera.constants.CaptureMode.video : Camera.constants.CaptureMode.still }
             type={cameraType == 'front' ? Camera.constants.Type.front : Camera.constants.Type.back }
-            captureQuality="medium"
+            captureQuality="low"
           >
             <View style={styles.buttonWrapper}>
 

@@ -7,16 +7,19 @@ import Video from 'react-native-video';
 export default class MediaItem extends Component {
 
   renderContent(media) {
-    const {caption,url} = media;
+    const {caption,medium_url,type} = media;
     return (
       <View style={styles.container}>
         <View>
-          {url ? getExtension(url) == 'jpg' ? <Image style={styles.img} source={{uri:url}}/> :
-            <Video source={{uri: url}}
+          { type == 'video' ?
+            <Video source={{uri: medium_url}}
                    style={styles.fullScreen}
                    repeat={false}
             />
-            : <View/> }
+            :
+            <Image style={styles.img} source={{uri:medium_url}}/>
+
+          }
         </View>
 
         <View>

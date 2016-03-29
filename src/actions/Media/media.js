@@ -74,19 +74,23 @@ export function saveMedia(uri) {
       if (xhr.readyState !== 4) {
         return;
       }
-      var json = JSON.parse(xhr.responseText);
 
       if (xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
         console.log('j',json);
-        //dispatch(mediaSaveSuccess(json));
+        dispatch(mediaSaveSuccess(json));
       } else {
-        //var json = JSON.parse(xhr.response);
-
-        dispatch({type: MEDIA_SAVE_FAILURE, error: xhr.response});
+        console.log('error',xhr.response);
+        //var json = JSON.parse(xhr.responseText);
+        //
+        //console.log('json',json);
+        ////var json = JSON.parse(xhr.response);
+        //
+        //dispatch({type: MEDIA_SAVE_FAILURE, error: json});
       }
     };
 
-    var photo = {
+    var media = {
       uri: uri,
       type: getExtension(uri),
       name: getMediaName(uri)
@@ -96,7 +100,7 @@ export function saveMedia(uri) {
       const url = API_ROOT + `/medias?api_token=${token}`;
       var body = new FormData();
       body.append('api_token', token);
-      body.append('photo', photo);
+      body.append('media', media);
       xhr.open('POST', url);
       xhr.send(body);
       return true;

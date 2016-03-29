@@ -14,15 +14,14 @@ export default class MediaList extends Component {
   }
 
   renderVideo(media) {
-    //<Image
-    //  style={styles.thumbnail}
-    //  resizeMode="stretch"
-    //  source={{ uri: media.url }}
-    ///>
     return (
       <View style={styles.row}>
-        <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=> this.renderVideoContent(media.url)}  >
-          <Text>load Video</Text>
+        <Lightbox underlayColor="transparent" springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={true} renderContent={()=> this.renderVideoContent(media.video_url)}  >
+          <Image
+            style={styles.thumbnail}
+            resizeMode="stretch"
+            source={{ uri: media.thumb_url }}
+          />
         </Lightbox>
       </View>
     )
@@ -30,14 +29,13 @@ export default class MediaList extends Component {
 
 
   renderRow(media) {
-    console.log('media type', getExtension(media.url));
     return (
       <View style={styles.row}>
         <TouchableHighlight onPress={() => this.props.loadMedia(media)} underlayColor="transparent">
-          { getExtension(media.url) == 'mov' ?
+          { media.type == 'video' ?
             this.renderVideo(media)
             :
-            <Image style={styles.thumbnail} source={{uri:media.url}}/>
+            <Image style={styles.thumbnail} source={{uri:media.thumb_url}}/>
           }
         </TouchableHighlight>
       </View>
