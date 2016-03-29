@@ -30,7 +30,7 @@ class App extends Component {
     const {dispatch} = this.props;
     dispatch(loginUserByToken()).then((success)=>{
       if(success) {
-        //Actions.tabBar();tabBar
+        //Actions.tabBar();
         //dispatch(fetchFavorites());
       }
     });
@@ -48,10 +48,6 @@ class App extends Component {
         <Schema name="withoutAnimation"/>
         <Schema name="tab" type="switch" icon={TabIcon} />
 
-        <Route initial={true} name="login" component={Login}  />
-        <Route name="register" component={Register} title="تسجيل الدخول"   />
-        <Route name="loginDialog" schema="modal" hideNavBar={true}  component={LoginDialog} />
-
         <Route name="tabBar">
           <Router footer={TabBar} hideNavBar={true} tabBarStyle={{backgroundColor:'#343459', justifyContent:'center', alignItems:'center', alignSelf:'center', height:40, paddingTop:10}}>
             <Route name="settingsScene" schema="tab" component={Settings} selectedTabIcon="ion|ios-gear" tabIcon="ion|ios-gear-outline"  />
@@ -59,7 +55,7 @@ class App extends Component {
             <Route name="userFavoritesScene" schema="tab" component={UserFavorites}  selectedTabIcon="ion|android-favorite" tabIcon="ion|android-favorite-outline"   />
             <Route name="mediaTab" initial={true}  schema="tab" selectedTabIcon="ion|briefcase" tabIcon="ion|briefcase" >
               <Router name="mediaRoutes" >
-                <Route name="mediasScene" component={Medias} rightTitle="+" onRight={()=>Actions.mediaCapture()} />
+                <Route name="mediasScene" component={Medias} rightTitle="+" rightButtonTextStyle={{ fontSize:25, fontWeight:'700'}} onRight={()=>Actions.mediaCapture()} />
                 <Route name="mediaScene" component={Media} />
                 <Route name="mediaCommentsScene" component={MediaComments} />
                 <Route name="mediaFavoritesScene" component={MediaFavorites} />
@@ -77,7 +73,11 @@ class App extends Component {
             </Route>
           </Router>
         </Route>
+
+        <Route  name="login" component={Login}  />
+        <Route name="register" component={Register} title="تسجيل الدخول"   />
         <Route name="mediaCapture" hideTabBar={true} hideNavBar={true} component={MediaCapture}  />
+        <Route name="loginDialog" schema="modal" hideNavBar={true}  component={LoginDialog} />
 
       </Router>
     );
@@ -87,7 +87,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    state
+    ...state
   }
 }
 

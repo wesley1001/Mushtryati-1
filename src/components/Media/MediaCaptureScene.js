@@ -1,5 +1,5 @@
 import React, {PropTypes,Component} from 'react';
-import { Image, StyleSheet, Text, TouchableHighlight, View, ListView,Dimensions,ScrollView,Modal,TouchableWithoutFeedback } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, View, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Icon } from 'react-native-icons';
 import Camera from 'react-native-camera';
 import Video from 'react-native-video';
@@ -62,7 +62,9 @@ export default class MediaCaptureScene extends Component {
   }
 
   render() {
-    const { cameraMode,cameraType,isRecording,hasCaptured,mediaUri} = this.props;
+
+    const { cameraMode,cameraType,isRecording,hasCaptured,mediaUri } = this.props;
+
     if(hasCaptured) {
       return (
         <View style={styles.container}>
@@ -111,6 +113,7 @@ export default class MediaCaptureScene extends Component {
             captureTarget={Camera.constants.CaptureTarget.disk}
             captureMode={cameraMode == 'video' ? Camera.constants.CaptureMode.video : Camera.constants.CaptureMode.still }
             type={cameraType == 'front' ? Camera.constants.Type.front : Camera.constants.Type.back }
+            captureQuality="low"
           >
             <View style={styles.buttonWrapper}>
 

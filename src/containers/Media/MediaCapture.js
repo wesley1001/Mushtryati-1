@@ -45,12 +45,14 @@ class MediaCapture extends Component {
   }
 
   startRecording() {
+    console.log('recording');
     this.setState({
       isRecording: true
     });
   }
 
   pauseRecording() {
+    console.log('stopped recording');
     this.setState({
       isRecording: false
     });
